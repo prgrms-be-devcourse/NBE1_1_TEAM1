@@ -26,7 +26,7 @@ public class ProductEntity {
     private Category category;
 
     @Column(nullable = false)
-    private int price;
+    private Long price;
 
     private String description;
 
@@ -35,7 +35,7 @@ public class ProductEntity {
 
     private LocalDateTime updateAt;
     @Builder
-    public ProductEntity(UUID id, String productName, Category category, int price, String description, LocalDateTime createAt, LocalDateTime updateAt) {
+    public ProductEntity(UUID id, String productName, Category category, Long price, String description, LocalDateTime createAt, LocalDateTime updateAt) {
         this.id = id;
         this.productName = productName;
         this.category = category;
@@ -44,11 +44,11 @@ public class ProductEntity {
         this.createAt = createAt;
         this.updateAt = updateAt;
     }
-//    public void updateProduct(UpdateProductRequest updateProductRequest) {
-//        this.productName = updateProductRequest.getProductName();
-//        this.updateAt = LocalDateTime.now();
-//        this.category = updateProductRequest.getCategory();
-//        this.description = updateProductRequest.getDescription();
-//        this.price = updateProductRequest.getPrice();
-//    }
+    public void updateProduct(String productName, Category category, long price, String description) {
+        this.productName = productName;
+        this.updateAt = LocalDateTime.now();
+        this.category = category;
+        this.description = description;
+        this.price = price;
+    }
 }

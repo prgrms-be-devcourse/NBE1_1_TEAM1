@@ -2,38 +2,22 @@ package com.programmers.mycoffee.service;
 
 import com.programmers.mycoffee.model.Category;
 import com.programmers.mycoffee.model.Product;
-import com.programmers.mycoffee.repository.ProductRepository;
-import lombok.RequiredArgsConstructor;
-import org.springframework.stereotype.Service;
 
-import java.time.LocalDateTime;
 import java.util.List;
+import java.util.Optional;
 import java.util.UUID;
 
-@Service
-@RequiredArgsConstructor
-public class ProductService{
+public interface ProductService {
+    List<Product> getProductsByCategory(Category category);
+    List<Product> getAllProducts();
 
-    private final ProductRepository productRepository;
+    Product getProductById(UUID productId);
 
-    public List<Product> getProductsByCategory(Category category) {
-        return productRepository.findByCategory(category);
-    }
-
-
-    public List<Product> getAllProducts() {
-        return productRepository.findAll();
-    }
+    Product createProduct(String productName, Category category, long price);
+    Product createProduct(String productName, Category category, long price, String description);
 
 
-    public Product createProduct(String productName, Category category, long price) {
-        var product = new Product(UUID.randomUUID(), productName, category, price);
-        return productRepository.insert(product);
-    }
+    Product updateProduct(UUID productId, String productName, Category category, long price, String description);
 
-
-    public Product createProduct(String productName, Category category, long price, String description) {
-        var product = new Product(UUID.randomUUID(), productName, category, price, description, LocalDateTime.now(), LocalDateTime.now());
-        return productRepository.insert(product);
-    }
+    void deleteProduct(UUID productId);
 }

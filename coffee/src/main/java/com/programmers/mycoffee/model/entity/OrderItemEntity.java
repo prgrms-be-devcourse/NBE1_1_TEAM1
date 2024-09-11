@@ -12,13 +12,13 @@ import java.util.UUID;
 @Entity
 @Getter
 @NoArgsConstructor
-public class
-OrderItemEntity {
+public class OrderItemEntity {
 
     @Id
     private UUID id;
 
     @Column(nullable = false)
+    @Enumerated(EnumType.STRING)
     private Category category;
 
     @Column(nullable = false)

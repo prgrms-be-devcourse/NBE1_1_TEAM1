@@ -1,23 +1,22 @@
 package com.programmers.mycoffee.controller;
 
-import com.programmers.mycoffee.service.ProductService;
+import com.programmers.mycoffee.service.DefaultProductService;
+import com.programmers.mycoffee.service.jpa.JpaProductService;
+import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 
 @Controller
+@RequiredArgsConstructor
 public class ProductController {
 
-    private final ProductService productService;
-
-    public ProductController(ProductService productService) {
-        this.productService = productService;
-    }
+    private final DefaultProductService defaultProductService;
 
     @GetMapping("/products")
     public String productsPage(Model model) {
-        var products = productService.getAllProducts();
+        var products = defaultProductService.getAllProducts();
         model.addAttribute("products", products);
         return "product-list";
     }
@@ -29,7 +28,7 @@ public class ProductController {
 
     @PostMapping("/products")
     public String newProduct(CreateProductRequest createProductRequest) {
-        productService.createProduct(
+        defaultProductService.createProduct(
                 createProductRequest.productName(),
                 createProductRequest.category(),
                 createProductRequest.price(),
