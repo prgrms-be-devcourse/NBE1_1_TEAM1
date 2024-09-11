@@ -34,6 +34,17 @@ function App() {
         setItems(updatedItems);
     }
 
+    const handleDeleteClicked = productId => {
+        const found = items.find(v => v.productId === productId);
+        if (found) {
+            const updatedItems = items
+                .map(v => (v.productId === productId) ? {...v, count: v.count - 1} : v)  // count 감소
+                .filter(v => v.count > 0);  // count가 0 이하인 상품을 제거
+
+            setItems(updatedItems);
+        }
+    }
+
     useEffect(() => {
         axios.get('http://localhost:8080/api/v1/products')
             .then(v => setProducts(v.data))
@@ -89,7 +100,7 @@ function App() {
                 <div className="card">
                     <div className="row">
                         <div className="col-md-8 mt-4 d-flex flex-column align-items-start p-3 pt-0">
-                            <ProductList products={products} onAddClick={handleAddClicked}/>
+                            <ProductList products={products} onAddClick={handleAddClicked} onDeleteClick={handleDeleteClicked}/>
                         </div>
                         <div className="col-md-4 summary p-4">
                             <Summary items={items} order={order} setOrder={setOrder} onOrderSubmit={handleOrderSubmit}/>
