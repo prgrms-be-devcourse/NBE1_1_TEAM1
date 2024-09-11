@@ -189,14 +189,18 @@ if (condition) {
 
 # 화면 설계서
 
-### 관리자 상품 관리 페이지
+## 관리자 상품 관리 페이지
+
+### 상품 추가
 ![image](https://github.com/user-attachments/assets/112c6ab9-6c25-4754-b6e7-90bb483d4cf9)
+
+### 상품 수정
 ![image](https://github.com/user-attachments/assets/65693e32-bc62-46b7-b4e3-090986619d75)
 
-### 사용자 주문 페이지
+## 사용자 주문 페이지
 ![image](https://github.com/user-attachments/assets/5b4c367c-a4c2-435a-8ceb-b41457b897ec)
 
-### 사용자 결제 완료 페이지
+## 사용자 결제 완료 페이지
 ![image](https://github.com/user-attachments/assets/23e6db58-ebe6-48ee-829e-d8ec6ea47c3a)
 
 
