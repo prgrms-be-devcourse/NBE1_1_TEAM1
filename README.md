@@ -181,6 +181,11 @@ if (condition) {
 
 </br>
 
+# 시스템 구성도
+![image](https://github.com/user-attachments/assets/d7552a7a-2db3-4adb-ab9a-730598cabd6f)
+
+</br></br>
+
 # ERD
 
 ![image](https://github.com/user-attachments/assets/faecad18-b04c-45b7-b213-b364a4cd0e94)
