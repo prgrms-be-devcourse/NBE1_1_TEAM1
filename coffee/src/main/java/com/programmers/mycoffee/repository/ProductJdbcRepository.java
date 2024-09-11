@@ -64,6 +64,12 @@ public class ProductJdbcRepository implements ProductRepository {
     }
 
     @Override
+    public void deleteById(UUID productId) {
+        jdbcTemplate.update("DELETE FROM products WHERE product_id = UUID_TO_BIN(:productId)",
+                Collections.singletonMap("productId", productId.toString().getBytes()));
+    }
+
+    @Override
     public Optional<Product> findByName(String productName) {
         try {
             return Optional.ofNullable(

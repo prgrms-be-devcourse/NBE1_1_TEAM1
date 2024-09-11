@@ -4,6 +4,8 @@ import com.programmers.mycoffee.model.Category;
 import com.programmers.mycoffee.model.Product;
 
 import java.util.List;
+import java.util.Optional;
+import java.util.UUID;
 
 public interface ProductService {
 
@@ -14,5 +16,11 @@ public interface ProductService {
     Product createProduct(String productName, Category category, long price);
 
     Product createProduct(String productName, Category category, long price, String description);
+
+    Optional<Product> getProductById(UUID productId);
+
+    Product updateProduct(UUID productId, String productName, Category category, long price, String description);
+
+    void deleteProduct(UUID productId);
 
 }

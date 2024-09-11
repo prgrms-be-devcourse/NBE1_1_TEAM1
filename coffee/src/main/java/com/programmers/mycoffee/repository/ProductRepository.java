@@ -22,4 +22,6 @@ public interface ProductRepository {
     List<Product> findByCategory(Category category);
 
     void deleteAll();
+
+    void deleteById(UUID productId);
 }
