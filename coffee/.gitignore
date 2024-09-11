@@ -35,3 +35,4 @@ build/
 /src/main/resources/application-test.yml
 /src/main/resources/application-test.properties
 /src/main/resources/.env
+/src/main/java/com/programmers/mycoffee/controller/api/admin/TestController.java
