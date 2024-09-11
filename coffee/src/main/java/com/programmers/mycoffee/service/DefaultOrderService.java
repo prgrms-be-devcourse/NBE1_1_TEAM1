@@ -33,4 +33,25 @@ public class DefaultOrderService implements OrderService {
                 LocalDateTime.now());
         return orderRepository.insert(order);
     }
+
+
+    @Override
+    public List<Order> findAll() {
+        return orderRepository.findAll();
+    }
+
+    @Override
+    public Order update(Order order) {
+        return orderRepository.update(order);
+    }
+
+    @Override
+    public Order findById(UUID orderID) {
+        return orderRepository.findById(orderID);
+    }
+
+    @Override
+    public Order findByName(String productName) {
+        return orderRepository.findByName(productName);
+    }
 }
