@@ -6,31 +6,31 @@ import com.programmers.mycoffee.model.Order;
 import com.programmers.mycoffee.service.DefaultOrderService;
 import com.programmers.mycoffee.service.jpa.JpaOrderService;
 import lombok.RequiredArgsConstructor;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
+import java.util.UUID;
 
 @RestController
 @RequiredArgsConstructor
 public class OrderRestController {
 
-//    private final DefaultOrderService orderService;
+    private final DefaultOrderService orderService;
 
-    private final JpaOrderService jpaOrderService;
+//    private final JpaOrderService orderService;
 
     @PostMapping("/api/v1/orders")
     public Order createOrder(@RequestBody CreateOrderRequest orderRequest) {
-//        return orderService.createOrder(
-//                new Email(orderRequest.email()),
-//                orderRequest.address(),
-//                orderRequest.postcode(),
-//                orderRequest.orderItems()
-//        );
-        return jpaOrderService.createOrder(
+        return orderService.createOrder(
                 new Email(orderRequest.email()),
                 orderRequest.address(),
                 orderRequest.postcode(),
                 orderRequest.orderItems()
         );
+    }
+
+    @GetMapping("test")
+    public Order test(@RequestParam("uuid") UUID a) {
+        return orderService.findById(a);
     }
 }

@@ -1,10 +1,12 @@
 package com.programmers.mycoffee.model.entity;
 
+import com.programmers.mycoffee.model.Order;
 import com.programmers.mycoffee.model.OrderStatus;
 import jakarta.persistence.*;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import org.aspectj.weaver.ast.Or;
 
 import java.time.LocalDateTime;
 import java.util.ArrayList;
@@ -51,7 +53,10 @@ public class OrderEntitiy {
         this.updateAt = updateAt;
     }
 
-
+//    public void updateOrder(Order order) {
+//        this.email = order.getEmail();
+//        this.
+//    }
     public void settingOrderItemList(OrderItemEntity orderItemList) {
         this.orderItemList.add(orderItemList);
     }

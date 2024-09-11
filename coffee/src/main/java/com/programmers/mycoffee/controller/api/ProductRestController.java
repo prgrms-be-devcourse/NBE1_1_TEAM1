@@ -20,7 +20,7 @@ public class ProductRestController {
 
     private final DefaultProductService defaultProductService;
 
-    private final JpaProductService productService;
+//    private final JpaProductService defaultProductService;
 
 //    @GetMapping
 //    public List<Product> productList(@RequestParam Optional<Category> category) {
@@ -31,13 +31,13 @@ public class ProductRestController {
 
     @GetMapping
     public List<Product> jpaProductList(@RequestParam Optional<Category> category) {
-        return productService.getAllProducts();
+        return defaultProductService.getAllProducts();
     }
 
     @PostMapping
     public ResponseEntity<Product> createProduct(@RequestBody ProductRequest productRequest) {
         // ProductRequest 객체를 Product 생성에 필요한 매개변수로 변환
-        Product product = productService.createProduct(
+        Product product = defaultProductService.createProduct(
                 productRequest.getProductName(),
                 productRequest.getCategory(),
                 productRequest.getPrice(),

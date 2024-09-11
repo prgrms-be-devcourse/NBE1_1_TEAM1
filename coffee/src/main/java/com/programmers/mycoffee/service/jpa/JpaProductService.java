@@ -36,10 +36,10 @@ public class JpaProductService implements ProductService {
 
     @Override
     @Transactional(readOnly = true)
-    public Product getProductById(UUID productId) {
+    public Optional<Product> getProductById(UUID productId) {
         Optional<ProductEntity> byId = productRepository.findById(productId);
         byId.orElseThrow();
-        return ProductMapTo.mapToProductDto(byId.get());
+        return Optional.of(ProductMapTo.mapToProductDto(byId.get()));
     }
 
     @Override

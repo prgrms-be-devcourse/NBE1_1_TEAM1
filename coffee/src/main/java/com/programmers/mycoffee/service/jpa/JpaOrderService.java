@@ -12,6 +12,7 @@ import com.programmers.mycoffee.repository.jpa.JpaOrderRepository;
 import com.programmers.mycoffee.repository.jpa.JpaProductRepository;
 import com.programmers.mycoffee.service.OrderService;
 import com.programmers.mycoffee.utils.OrderMapTo;
+import com.programmers.mycoffee.utils.Utils;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -65,8 +66,13 @@ public class JpaOrderService implements OrderService {
 
     @Override
     public Order update(Order order) {
-
-        return null;
+        Optional<OrderEntitiy> byId = jpaOrderRepository.findById(order.getOrderId());
+        byId.orElseThrow();
+        OrderEntitiy orderEntitiy = byId.get();
+//        if (Utils.updateOrderStatusCheck(orderEntitiy.getOrderStatus())) {
+//            orderEntitiy.
+//        }
+        return order;
     }
 
     @Override

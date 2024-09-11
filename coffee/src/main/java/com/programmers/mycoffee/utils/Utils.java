@@ -37,4 +37,9 @@ public class Utils {
             return orderStatus;
         }
     }
+
+    public static Boolean updateOrderStatusCheck(OrderStatus orderStatus) {
+        return !orderStatus.equals(OrderStatus.SHIPPED) && !orderStatus.equals(OrderStatus.SETTLED) && !orderStatus.equals(OrderStatus.CANCELLED);
+
+    }
 }

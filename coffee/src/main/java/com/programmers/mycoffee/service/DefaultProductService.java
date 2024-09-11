@@ -27,10 +27,6 @@ public class DefaultProductService implements ProductService {
         return productRepository.findAll();
     }
 
-    @Override
-    public Product getProductById(UUID productId) {
-        return null;
-    }
 
 
     @Override
@@ -47,11 +43,25 @@ public class DefaultProductService implements ProductService {
 
     @Override
     public Product updateProduct(UUID productId, String productName, Category category, long price, String description) {
-        return null;
+        var product = productRepository.findById(productId)
+                .orElseThrow(() -> new RuntimeException("Product not found"));
+        product.setProductName(productName);
+        product.setCategory(category);
+        product.setPrice(price);
+        product.setDescription(description);
+        return productRepository.update(product);
     }
 
     @Override
     public void deleteProduct(UUID productId) {
+        // Check if the product exists, then delete it by ID
+        productRepository.findById(productId)
+                .orElseThrow(() -> new RuntimeException("Product not found"));
+        productRepository.deleteById(productId);
+    }
 
+    @Override
+    public Optional<Product> getProductById(UUID productId) {
+        return productRepository.findById(productId);
     }
 }
