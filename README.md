@@ -1,15 +1,5 @@
 ﻿# NBE1_1_TEAM1
 
-- 개인 개발 깃 링크
-    
-    한도윤: https://github.com/backend-devcourse-team1/doyun
-    
-    이종원: https://github.com/backend-devcourse-team1/projecdt1_ljw
-    
-    김도우: https://github.com/backend-devcourse-team1/project_kdw
-    
-    류정원: https://github.com/backend-devcourse-team1/project1_rjw
-
 </br>
     
 # 역할
@@ -68,6 +58,8 @@
 - JUnit
 
 </br>
+
+# Structure of Directory
 
 # Naming Convention
 
