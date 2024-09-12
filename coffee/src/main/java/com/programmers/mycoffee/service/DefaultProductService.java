@@ -3,6 +3,7 @@ package com.programmers.mycoffee.service;
 import com.programmers.mycoffee.model.Category;
 import com.programmers.mycoffee.model.Product;
 import com.programmers.mycoffee.repository.ProductRepository;
+import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
@@ -11,13 +12,10 @@ import java.util.Optional;
 import java.util.UUID;
 
 @Service
+@RequiredArgsConstructor
 public class DefaultProductService implements ProductService {
 
     private final ProductRepository productRepository;
-
-    public DefaultProductService(ProductRepository productRepository) {
-        this.productRepository = productRepository;
-    }
 
     @Override
     public List<Product> getProductsByCategory(Category category) {
@@ -28,6 +26,8 @@ public class DefaultProductService implements ProductService {
     public List<Product> getAllProducts() {
         return productRepository.findAll();
     }
+
+
 
     @Override
     public Product createProduct(String productName, Category category, long price) {

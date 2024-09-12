@@ -5,6 +5,7 @@ import com.programmers.mycoffee.model.Email;
 import com.programmers.mycoffee.model.Order;
 import com.programmers.mycoffee.model.OrderStatus;
 import com.programmers.mycoffee.service.OrderService;
+
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -12,12 +13,17 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 import java.util.UUID;
 
+import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RestController;
+
 @RestController
 public class OrderRestController {
 
     private final OrderService orderService;
 
-    public OrderRestController(OrderService orderService) {
+    public OrderRestController(@Qualifier("defaultOrderService") OrderService orderService) {
         this.orderService = orderService;
     }
 
@@ -72,3 +78,4 @@ public class OrderRestController {
         }
     }
 }
+
