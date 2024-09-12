@@ -1,7 +1,11 @@
 package com.programmers.mycoffee.controller;
 
+import com.programmers.mycoffee.service.DefaultProductService;
+import com.programmers.mycoffee.service.jpa.JpaProductService;
+import lombok.RequiredArgsConstructor;
 import com.programmers.mycoffee.model.Category;
 import com.programmers.mycoffee.service.ProductService;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -15,7 +19,7 @@ public class ProductController {
 
     private final ProductService productService;
 
-    public ProductController(ProductService productService) {
+    public ProductController(@Qualifier("defaultProductService") ProductService productService) {
         this.productService = productService;
     }
 
