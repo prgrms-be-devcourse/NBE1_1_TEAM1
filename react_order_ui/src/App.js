@@ -6,25 +6,51 @@ import axios from "axios";
 import {ProductList} from "./components/ProductList";
 import {Summary} from "./components/Summary";
 import {OrderCompletion} from "./components/OrderCompletion";
-
+import { Login } from "./components/Login";
 
 function App() {
 
+    const [isLogIn, setIsLogin] = useState(false);
     const [products, setProducts] = useState([
         {productId: 'uuid-1', productName: '콜롬비아 커피 1', category: '커피빈', price: 5000},
         {productId: 'uuid-2', productName: '콜롬비아 커피 2', category: '커피빈', price: 5000},
         {productId: 'uuid-3', productName: '콜롬비아 커피 3', category: '커피빈', price: 5000},
     ]);
     const [items, setItems] = useState([]);
-
-    const [order, setOrder] = useState({ // 주문 정보 상태
-        email: "",
-        address: "",
-        postcode: ""
-    });
-
+    const [order, setOrder] = useState({email: "", address: "", postcode: ""});// 주문 정보 상태
     const [completedOrder, setCompletedOrder] = useState(null);
     const [isOrderComplete, setIsOrderComplete] = useState(false);
+
+    useEffect(() => {
+        const token = localStorage.getItem('token');
+        if (token) {
+            axios.defaults.headers.common['Authorization'] = `Bearer ${token}`;
+            setIsLogin(true);
+        }
+    },  []);
+
+    useEffect(() => {
+        if (isLogIn) {
+            axios.get('http://localhost:8080/api/v1/products')
+                .then(v => setProducts(v.data))
+                .catch(error => {
+                    if (error.response && error.response.status === 401) {
+                        setIsLogin(false);
+                        localStorage.removeItem('token')
+                    }
+                })
+        }
+    }, [isLogIn]);
+
+    const handleLoginSuccess = () => {
+        setIsLogin(true);
+    };
+
+    const handleLogout = () => {
+        setIsLogin(false);
+        localStorage.removeItem('token');
+        axios.defaults.headers.common['Authorization'] = '';
+    };
 
     const handleAddClicked = productId => {
         const product = products.find(v => v.productId === productId);
@@ -44,11 +70,6 @@ function App() {
             setItems(updatedItems);
         }
     }
-
-    useEffect(() => {
-        axios.get('http://localhost:8080/api/v1/products')
-            .then(v => setProducts(v.data))
-    }, []);
 
     const handleOrderSubmit = (order) => {
         if (items.length === 0) {
@@ -89,6 +110,14 @@ function App() {
         // router-dom 도 많이 나오는데 일단 이렇게
         setIsOrderComplete(false);
         setCompletedOrder(null);
+    }
+
+    if (!isLogIn) {
+        return (
+            <div className="container mt-5">
+                <Login onLoginSuccess={handleLoginSuccess} />
+            </div>
+        );
     }
 
     return (
