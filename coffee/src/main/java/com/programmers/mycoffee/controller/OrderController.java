@@ -4,6 +4,7 @@ import com.programmers.mycoffee.model.Email;
 import com.programmers.mycoffee.model.Order;
 import com.programmers.mycoffee.model.Product;
 import com.programmers.mycoffee.service.OrderService;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -18,7 +19,7 @@ public class OrderController {
 
     private final OrderService orderService;
 
-    public OrderController(OrderService orderService) {
+    public OrderController(@Qualifier("defaultOrderService")OrderService orderService) {
         this.orderService = orderService;
     }
 
