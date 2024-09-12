@@ -33,23 +33,25 @@ public class DefaultOrderService implements OrderService {
         return orderRepository.insert(order);
     }
 
+
     @Override
     public List<Order> findAll() {
-        return null;
+        return orderRepository.findAll();
     }
 
     @Override
     public Order update(Order order) {
-        return null;
+        return orderRepository.update(order);
     }
 
     @Override
     public Order findById(UUID orderID) {
-        return null;
+        return orderRepository.findById(orderID);
+
     }
 
     @Override
     public Order findByName(String productName) {
-        return null;
+        return orderRepository.findByName(productName);
     }
 }
