@@ -1,7 +1,7 @@
 package com.programmers.mycoffee.jwt;
 
-import io.github.cdimascio.dotenv.Dotenv;
 import io.jsonwebtoken.Jwts;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 
 import javax.crypto.SecretKey;
@@ -11,9 +11,13 @@ import java.util.Date;
 
 @Component
 public class JwtUtil {
-    private final Dotenv dotenv = Dotenv.load();
-    private final SecretKey secretKey = new SecretKeySpec(dotenv.get("secret").getBytes(StandardCharsets.UTF_8), Jwts.SIG.HS256.key().build().getAlgorithm());
+    private SecretKey secretKey;
 
+    public JwtUtil(@Value("${spring.jwt.test.secret}")String secret) {
+
+
+        secretKey = new SecretKeySpec(secret.getBytes(StandardCharsets.UTF_8), Jwts.SIG.HS256.key().build().getAlgorithm());
+    }
     public String getUsername(String token) {
         return Jwts.parser().
                 verifyWith(secretKey).
