@@ -1,0 +1,34 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.0/dist/css/bootstrap.min.css" rel="stylesheet"
+          integrity="sha384-KyZXEAg3QhqLMpG8r+8fhAXLRk2vvoC2f3B09zVXn8CA5QIVfZOJ3BCsw2P0p/We" crossorigin="anonymous">
+
+    <title>Grids & Circles</title>
+</head>
+<body class="container-fluid">
+<h1>Grids & Circles</h1>
+<h2>Order Management</h2>
+<form th:action="@{/orders}" method="post">
+    <div class="mb-3">
+        <label for="email" class="form-label">Name</label>
+        <input type="text" class="form-control" id="email" name="email">
+    </div>
+    <div class="mb-3">
+        <label for="address" class="form-label">Name</label>
+        <input type="text" class="form-control" id="address" name="address">
+    </div>
+    <div class="mb-3">
+        <label for="postcode" class="form-label">Name</label>
+        <input type="text" class="form-control" id="postcode" name="postcode">
+    </div>
+<!--    orderItems 추가 & 삭제 / 아이템 선택 후 개수 추가하는 방식-->
+    <button type="submit" class="btn btn-primary">Submit</button>
+</form>
+</body>
+</html>
