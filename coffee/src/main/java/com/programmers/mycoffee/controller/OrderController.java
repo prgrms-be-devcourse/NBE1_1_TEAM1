@@ -25,6 +25,7 @@ public class OrderController {
     @GetMapping("/orders")
     public String ordersPage(Model model) {
         var orders = orderService.findAll();
+
         model.addAttribute("orders", orders);
         return "order-list";
     }

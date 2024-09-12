@@ -25,7 +25,7 @@
         <th scope="col">Address</th>
         <th scope="col">Postcode</th>
         <th scope="col">OrderStatus</th>
-<!--        <th scope="col">OrderItems</th>-->
+        <th scope="col">OrderItems</th>
         <th scope="col">Created At</th>
         <th scope="col">Updated At</th>
         <th scope="col">Actions</th>
@@ -37,8 +37,15 @@
         <td th:text="*{email}"></td>
         <td th:text="*{address}"></td>
         <td th:text="*{postcode}"></td>
-<!--        orderItems-->
         <td th:text="*{orderStatus}"></td>
+        <td> <!-- OrderItems 추가 -->
+            <ul>
+                <li th:each="item : *{orderItems}">
+                    Product ID: <span th:text="${item.productId}"></span>,
+                    Quantity: <span th:text="${item.quantity}"></span>
+                </li>
+            </ul>
+        </td>
         <td th:text="*{createdAt}"></td>
         <td th:text="*{updatedAt}"></td>
         <td>
