@@ -1,5 +1,4 @@
 import {SummaryItem} from "./SummaryItem";
-import React, {useState} from "react";
 
 export function Summary({items = [], order, setOrder, onOrderSubmit}) {
     const totalPrice = items.reduce((prev, curr) => prev + (curr.price * curr.count), 0)
