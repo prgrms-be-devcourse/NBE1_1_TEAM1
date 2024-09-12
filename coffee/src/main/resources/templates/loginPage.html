@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Login</title>
+    <script>
+        function submitLoginForm(event) {
+            event.preventDefault(); // Prevent default form submission
+
+            // Get form element
+            var form = document.getElementById('loginForm');
+            var formData = new FormData(form);
+
+            // Convert to JSON object
+            var json = {};
+            formData.forEach((value, key) => {
+                json[key] = value;
+            });
+
+            // Send AJAX request
+            fetch('/api/v1/admin/login', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify(json)
+            })
+                .then(response => {
+                    if (response.ok) {
+                        // Redirect on successful login
+                        window.location.href = '/products'; // Redirect URL
+                    } else {
+                        return response.text().then(text => {
+                            throw new Error(text);
+                        });
+                    }
+                })
+                .catch(error => {
+                    alert('Login failed: ' + error.message);
+                });
+        }
+    </script>
+</head>
+<body>
+<h1>Login</h1>
+<form id="loginForm" onsubmit="submitLoginForm(event)">
+    <div>
+        <label for="username">Username:</label>
+        <input type="text" id="username" name="username" placeholder="Enter your username" required/>
+    </div>
+    <div>
+        <label for="password">Password:</label>
+        <input type="password" id="password" name="password" placeholder="Enter your password" required/>
+    </div>
+    <div>
+        <button type="submit">Login</button>
+    </div>
+</form>
+
+<!-- 회원가입 페이지로 이동하는 버튼 -->
+<div>
+    <p>Don't have an account?</p>
+    <a th:href="@{/signUp}">
+        <button type="button">Sign Up</button>
+    </a>
+</div>
+</body>
+</html>
