@@ -61,6 +61,9 @@
 
 # Structure of Directory
 
+![image](https://github.com/user-attachments/assets/7b4c32e5-4dea-47d4-9b5a-97eea68b6d30)
+</br></br>
+
 # Naming Convention
 
 
@@ -218,3 +221,12 @@ if (condition) {
 
 
 # API 명세서
+
+| 기능           | HTTP 메서드 | API Path                            | Code |
+|----------------|-------------|-------------------------------------|------|
+| 주문 수정      | PUT         | /api/v1/orders/update/{orderId}     | 200  |
+| 주문 목록      | POST        | /api/v1/orders                      | 200  |
+| 단일 주문 내역 | GET         | /api/v1/orders/{orderId}            | 200  |
+| 주문한 제품    | GET         | /api/v1/orders/product              | 200  |
+| 사용자 등록    | POST        | /api/v1/admin/join                  | 200  |
+| 제품 목록      | GET         | /api/v1/products                    | 200  |
