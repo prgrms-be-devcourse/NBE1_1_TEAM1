@@ -3,6 +3,7 @@ package com.programmers.mycoffee.controller.api;
 import com.programmers.mycoffee.model.Category;
 import com.programmers.mycoffee.model.Product;
 import com.programmers.mycoffee.service.ProductService;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
@@ -16,7 +17,7 @@ public class ProductRestController {
 
     private final ProductService productService;
 
-    public ProductRestController(ProductService productService) {
+    public ProductRestController(@Qualifier("defaultProductService") ProductService productService) {
         this.productService = productService;
     }
 
