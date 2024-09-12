@@ -61,8 +61,8 @@ public class SecurityConfig {
         //경로별 인가 작업
         http
                 .authorizeHttpRequests((auth) -> auth
-                        .requestMatchers("/api/v1/admin/join",
-                                "/api/v1/admin/login",
+                        .requestMatchers("/api/v1/join",
+                                "/api/v1/login",
                                 "/api/v1/products",
                                 "api/v1/orders",
                                 "/login",

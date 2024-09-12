@@ -30,7 +30,7 @@ public class LoginFilter extends UsernamePasswordAuthenticationFilter {
     public LoginFilter(AuthenticationManager authenticationManager, JwtUtil jwtUtil) {
         this.authenticationManager = authenticationManager;
         this.jwtUtil = jwtUtil;
-        setRequiresAuthenticationRequestMatcher(new AntPathRequestMatcher("/api/v1/admin/login", "POST"));
+        setRequiresAuthenticationRequestMatcher(new AntPathRequestMatcher("/api/v1/login", "POST"));
     }
 
     @Override
