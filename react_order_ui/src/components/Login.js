@@ -1,11 +1,13 @@
 import '../Login.css';
 import React, { useState } from "react";
 import axios from 'axios';
+import { useNavigate } from 'react-router-dom';
 
 export function Login({ onLoginSuccess }) {
     const [isSignUp, setIsSignUp] = useState(false);
-    const [email, setEmail] = useState('');
+    const [username, setUsername] = useState('');
     const [password, setPassword] = useState('');
+    const navigate = useNavigate();
 
     const handleSignUpClick = () => {
         setIsSignUp(true);
@@ -16,27 +18,45 @@ export function Login({ onLoginSuccess }) {
     };
 
     const handleSignIn = async (e) => {
-        e.preventDefault();
-        try {
-            // const response = await axios.post('http://localhost:8080/api/v1/login', { email, password });
-            // const { token } = response.data;
-            // localStorage.setItem('token', token);
-            // axios.defaults.headers.common['Authorization'] = `Bearer ${token}`;
-            onLoginSuccess();
-        } catch (error) {
-            console.error('Login failed:', error);
-            alert('로그인에 실패했습니다. 다시 시도해주세요.');
+    e.preventDefault();
+    try {
+        const response = await axios.post('http://localhost:8080/api/v1/login', {
+            username,
+            password
+        });
+
+        // 응답 상태 코드가 200대인 경우 Authorization 헤더 추출
+        if (response.status >= 200 && response.status < 300) {
+            const authToken = response.headers['authorization'] || response.headers['Authorization'];
+            alert("로그인 성공")
+            
+            localStorage.setItem('token', authToken); // 토큰을 로컬 스토리지에 저장
+            axios.defaults.headers.common['Authorization'] = authToken; // 기본 헤더에 토큰 설정
+            navigate("/main")
+        } else {
+            console.error('응답 상태 코드 오류:', response.status);
+            throw new Error('로그인에 실패했습니다. 응답 상태 코드 오류.');
         }
-    };
+    } catch (error) {
+        console.error('로그인 실패:', error);
+        alert('로그인에 실패했습니다. 사용자 이름과 비밀번호를 확인하세요.');
+    }
+};
 
     const handleSignUp = async (e) => {
         e.preventDefault();
         try {
-            // 회원가입 동작
-            setIsSignUp(false)
+            await axios.post('http://localhost:8080/api/v1/join', {
+                username,
+                password,
+                role: 'USER' // Fixed role value
+            });
+            alert('회원가입 성공!');
+            setIsSignUp(false);
+            navigate('/main'); // Redirect to login page after sign up
         } catch (error) {
-            console.error('Login failed:', error);
-            alert('로그인에 실패했습니다. 다시 시도해주세요.');
+            console.error('Sign Up failed:', error);
+            alert('회원가입에 실패했습니다. 다시 시도해주세요.');
         }
     };
 
@@ -48,9 +68,9 @@ export function Login({ onLoginSuccess }) {
                     <input
                         type="text"
                         className="form-control"
-                        placeholder="Email"
-                        value={email}
-                        onChange={(e) => setEmail(e.target.value)}
+                        placeholder="Username"
+                        value={username}
+                        onChange={(e) => setUsername(e.target.value)}
                         required
                     />
                     <input
@@ -61,19 +81,19 @@ export function Login({ onLoginSuccess }) {
                         onChange={(e) => setPassword(e.target.value)}
                         required
                     />
-                    <button>Sign Up</button>
+                    <button type="submit">Sign Up</button>
                 </form>
             </div>
             <div className="form-container sign-in-container">
                 <form onSubmit={handleSignIn} className="login-form">
-                    <h1>Sign in</h1>
+                    <h1>Sign In</h1>
                     <div className="form-floating">
                         <input
                             type="text"
                             className="form-control"
                             placeholder="아이디 입력..."
-                            value={email}
-                            onChange={(e) => setEmail(e.target.value)}
+                            value={username}
+                            onChange={(e) => setUsername(e.target.value)}
                             required
                         />
                         <label htmlFor="username">아이디</label>
@@ -96,12 +116,10 @@ export function Login({ onLoginSuccess }) {
                 <div className="overlay">
                     <div className="overlay-panel overlay-left">
                         <h1>Welcome Back!</h1>
-                        <p>  </p>
                         <button className="ghost" onClick={handleSignInClick}>Sign In</button>
                     </div>
                     <div className="overlay-panel overlay-right">
                         <h1>Hello, Friend!</h1>
-                        <p>  </p>
                         <button className="ghost" onClick={handleSignUpClick}>Sign Up</button>
                     </div>
                 </div>
@@ -109,3 +127,5 @@ export function Login({ onLoginSuccess }) {
         </div>
     );
 }
+
+export default Login;
