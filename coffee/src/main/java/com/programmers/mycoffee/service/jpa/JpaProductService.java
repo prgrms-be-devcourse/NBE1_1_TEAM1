@@ -49,6 +49,10 @@ public class JpaProductService implements ProductService {
 
     @Override
     public Product createProduct(String productName, Category category, long price, String description) {
+        Optional<ProductEntity> byProductName = productRepository.findByProductName(productName);
+        if (byProductName.isPresent()) {
+            throw new IllegalStateException("Same product exists :: " + productName);
+        }
         productRepository.save(ProductMapTo.mapToProductEntity(productName, category, price, description));
         return null;
     }

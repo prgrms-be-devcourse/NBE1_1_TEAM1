@@ -3,21 +3,20 @@ package com.programmers.mycoffee.controller.api;
 import com.programmers.mycoffee.controller.CreateOrderRequest;
 import com.programmers.mycoffee.model.Email;
 import com.programmers.mycoffee.model.Order;
-import com.programmers.mycoffee.service.DefaultOrderService;
-import com.programmers.mycoffee.service.jpa.JpaOrderService;
-import lombok.RequiredArgsConstructor;
-import org.springframework.web.bind.annotation.*;
-
-import java.util.List;
-import java.util.UUID;
+import com.programmers.mycoffee.service.OrderService;
+import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RestController;
 
 @RestController
-@RequiredArgsConstructor
 public class OrderRestController {
 
-    private final DefaultOrderService orderService;
+    private final OrderService orderService;
 
-//    private final JpaOrderService orderService;
+    public OrderRestController(@Qualifier("defaultOrderService") OrderService orderService) {
+        this.orderService = orderService;
+    }
 
     @PostMapping("/api/v1/orders")
     public Order createOrder(@RequestBody CreateOrderRequest orderRequest) {
@@ -27,10 +26,5 @@ public class OrderRestController {
                 orderRequest.postcode(),
                 orderRequest.orderItems()
         );
-    }
-
-    @GetMapping("test")
-    public Order test(@RequestParam("uuid") UUID a) {
-        return orderService.findById(a);
     }
 }

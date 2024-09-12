@@ -14,4 +14,6 @@ public interface JpaProductRepository extends JpaRepository<ProductEntity, UUID>
 
     Optional<List<ProductEntity>> findByCategory(Category category);
 
+    Optional<ProductEntity> findByProductName(String productName);
+
 }

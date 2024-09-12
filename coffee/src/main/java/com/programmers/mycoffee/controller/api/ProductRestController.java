@@ -2,47 +2,29 @@ package com.programmers.mycoffee.controller.api;
 
 import com.programmers.mycoffee.model.Category;
 import com.programmers.mycoffee.model.Product;
-import com.programmers.mycoffee.service.DefaultProductService;
-import com.programmers.mycoffee.service.jpa.JpaProductService;
-import com.programmers.mycoffee.service.jpa.ProductRequest;
-import lombok.RequiredArgsConstructor;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.*;
+import com.programmers.mycoffee.service.ProductService;
+import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.RestController;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
 @RestController
-@RequiredArgsConstructor
-@RequestMapping("/api/v1/products")
 public class ProductRestController {
 
-    private final DefaultProductService defaultProductService;
+    private final ProductService productService;
 
-//    private final JpaProductService defaultProductService;
-
-//    @GetMapping
-//    public List<Product> productList(@RequestParam Optional<Category> category) {
-//        return category
-//                .map(defaultProductService::getProductsByCategory)
-//                .orElse(defaultProductService.getAllProducts());
-//    }
-
-    @GetMapping
-    public List<Product> jpaProductList(@RequestParam Optional<Category> category) {
-        return defaultProductService.getAllProducts();
+    public ProductRestController(@Qualifier("defaultProductService") ProductService productService) {
+        this.productService = productService;
     }
 
-    @PostMapping
-    public ResponseEntity<Product> createProduct(@RequestBody ProductRequest productRequest) {
-        // ProductRequest 객체를 Product 생성에 필요한 매개변수로 변환
-        Product product = defaultProductService.createProduct(
-                productRequest.getProductName(),
-                productRequest.getCategory(),
-                productRequest.getPrice(),
-                productRequest.getDescription()
-        );
-        return new ResponseEntity<>(product, HttpStatus.CREATED);
+    @GetMapping("/api/v1/products")
+    public List<Product> productList(@RequestParam Optional<Category> category) {
+        return category
+                .map(productService::getProductsByCategory)
+                .orElse(productService.getAllProducts());
     }
 }

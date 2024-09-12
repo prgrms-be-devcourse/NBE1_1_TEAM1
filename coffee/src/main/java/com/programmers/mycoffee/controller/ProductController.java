@@ -5,6 +5,7 @@ import com.programmers.mycoffee.service.jpa.JpaProductService;
 import lombok.RequiredArgsConstructor;
 import com.programmers.mycoffee.model.Category;
 import com.programmers.mycoffee.service.ProductService;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -14,14 +15,17 @@ import org.springframework.web.bind.annotation.PostMapping;
 import java.util.UUID;
 
 @Controller
-@RequiredArgsConstructor
 public class ProductController {
 
-    private final JpaProductService defaultProductService;
+    private final ProductService productService;
+
+    public ProductController(@Qualifier("defaultProductService") ProductService productService) {
+        this.productService = productService;
+    }
 
     @GetMapping("/products")
     public String productsPage(Model model) {
-        var products = defaultProductService.getAllProducts();
+        var products = productService.getAllProducts();
         model.addAttribute("products", products);
         return "product-list";
     }
@@ -33,7 +37,7 @@ public class ProductController {
 
     @PostMapping("/products")
     public String newProduct(CreateProductRequest createProductRequest) {
-        defaultProductService.createProduct(
+        productService.createProduct(
                 createProductRequest.productName(),
                 createProductRequest.category(),
                 createProductRequest.price(),
@@ -43,7 +47,7 @@ public class ProductController {
 
     @GetMapping("/products/edit/{productId}")
     public String editProductPage(@PathVariable UUID productId, Model model) {
-        var product = defaultProductService.getProductById(productId)
+        var product = productService.getProductById(productId)
                 .orElseThrow(() -> new RuntimeException("Product not found"));
         model.addAttribute("product", product);
         model.addAttribute("categories", Category.values()); // Assuming Category is an enum
@@ -52,7 +56,7 @@ public class ProductController {
 
     @PostMapping("/products/update/{productId}")
     public String updateProduct(UpdateProductRequest updateProductRequest) {
-        defaultProductService.updateProduct(
+        productService.updateProduct(
                 updateProductRequest.productId(),
                 updateProductRequest.productName(),
                 updateProductRequest.category(),
@@ -63,7 +67,7 @@ public class ProductController {
 
     @PostMapping("/products/{productId}")
     public String deleteProduct(@PathVariable UUID productId) {
-        defaultProductService.deleteProduct(productId);
+        productService.deleteProduct(productId);
         return "redirect:/products";
     }
 }
