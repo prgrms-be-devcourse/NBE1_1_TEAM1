@@ -60,7 +60,14 @@ public class SecurityConfig {
         //경로별 인가 작업
         http
                 .authorizeHttpRequests((auth) -> auth
-                        .requestMatchers("/api/v1/admin/join", "/api/v1/admin/login").permitAll()
+                        .requestMatchers("/api/v1/admin/join",
+                                "/api/v1/admin/login",
+                                "/api/v1/products",
+                                "api/v1/orders",
+                                "/products/**",
+                                "/new-product",
+                                "/v3/api-docs/**",
+                                "/swagger-ui/**").permitAll()
                         .anyRequest().authenticated());
         http
                 .addFilterBefore(new JwtFilter(jwtUtil), LoginFilter.class);
